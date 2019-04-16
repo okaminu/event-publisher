@@ -1,2 +1,2 @@
 # event-publisher
-Observer pattern for JavaScript and Typescript
+Observer pattern for JavaScript and TypeScript
