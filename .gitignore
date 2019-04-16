@@ -4,3 +4,5 @@ out
 gen
 
 .gradle
+
+node_modules

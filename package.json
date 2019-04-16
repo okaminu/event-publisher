@@ -1,0 +1,19 @@
+{
+  "name": "@boldadmin/event-publisher",
+  "version": "2.1.0",
+  "description": "Observer pattern for JavaScript and TypeScript",
+  "main": "event-publisher.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boldadmin-com/event-publisher.git"
+  },
+  "keywords": ["observer", "event", "subscribe"],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/boldadmin-com/event-publisher/issues"
+  },
+  "homepage": "https://github.com/boldadmin-com/event-publisher#readme"
+}
