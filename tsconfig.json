@@ -3,11 +3,13 @@
     "target": "es5",
     "module": "commonjs",
     "declaration": true,
-    "outDir": "./lib"
+    "outDir": "./lib",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false
   },
-  "lib": [
-    "es2017"
-  ],
   "include": [
     "src"
   ],
