@@ -27,8 +27,8 @@
     "pretest": "clear",
     "test": "jasmine --config=jasmine.json",
     "lint": "tslint -p tsconfig.json",
-    "prepare" : "npm run build",
-    "prepublishOnly" : "npm test && npm run lint"
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint"
   },
   "dependencies": {
     "@angular/core": "^7.2.13",
