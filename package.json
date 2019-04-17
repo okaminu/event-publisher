@@ -2,21 +2,34 @@
   "name": "@boldadmin/event-publisher",
   "version": "2.1.0",
   "description": "Observer pattern for JavaScript and TypeScript",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/boldadmin-com/event-publisher.git"
-  },
   "keywords": [
     "observer",
     "event",
     "subscribe",
     "angular"
   ],
+  "homepage": "https://github.com/boldadmin-com/event-publisher#readme",
   "bugs": {
     "url": "https://github.com/boldadmin-com/event-publisher/issues"
   },
-  "homepage": "https://github.com/boldadmin-com/event-publisher#readme",
+  "license": "MIT",
+  "files": [
+    "lib/**/*"
+  ],
+  "main": "lib/event-publisher.js",
+  "types": "lib/event-publisher.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boldadmin-com/event-publisher.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "pretest": "clear",
+    "test": "jasmine --config=jasmine.json",
+    "lint": "tslint -p tsconfig.json",
+    "prepare" : "npm run build",
+    "prepublishOnly" : "npm test && npm run lint"
+  },
   "dependencies": {
     "@angular/core": "^7.2.13",
     "rxjs": "^6.4.0",
@@ -31,16 +44,5 @@
     "ts-node": "^8.1.0",
     "tslint": "^5.16.0",
     "typescript": "^3.4.3"
-  },
-  "scripts": {
-    "build": "tsc",
-    "pretest": "clear",
-    "test": "jasmine --config=jasmine.json",
-    "lint": "tslint -p tsconfig.json",
-    "prepare" : "npm run build",
-    "prepublishOnly" : "npm test && npm run lint"
-  },
-  "files": [
-    "lib/**/*"
-  ]
+  }
 }
