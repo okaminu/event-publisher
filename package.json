@@ -22,15 +22,6 @@
     "type": "git",
     "url": "git+https://github.com/boldadmin-com/event-publisher.git"
   },
-  "scripts": {
-    "build": "tsc",
-    "build-watch": "tsc -w",
-    "pretest": "clear",
-    "test": "jasmine --config=jasmine.json",
-    "lint": "tslint -p tsconfig.json",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint"
-  },
   "dependencies": {
     "@angular/core": "^7.2.13",
     "rxjs": "^6.4.0",
@@ -45,5 +36,14 @@
     "ts-node": "^8.1.0",
     "tslint": "^5.16.0",
     "typescript": "^3.4.3"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build-watch": "tsc -w",
+    "pretest": "clear",
+    "test": "jasmine --config=jasmine.json",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint"
   }
 }
