@@ -43,7 +43,6 @@
   "scripts": {
     "build": "tsc",
     "build-watch": "tsc -w",
-    "pretest": "clear",
     "test": "jasmine --config=jasmine.json",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
