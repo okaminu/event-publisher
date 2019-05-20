@@ -5,8 +5,7 @@
   "keywords": [
     "observer",
     "event",
-    "subscribe",
-    "angular"
+    "subscribe"
   ],
   "homepage": "https://github.com/boldadmin-com/event-publisher#readme",
   "bugs": {
@@ -23,7 +22,6 @@
     "url": "git+https://github.com/boldadmin-com/event-publisher.git"
   },
   "peerDependencies": {
-    "@angular/core": "^7.2.13",
     "rxjs": "^6.4.0",
     "zone.js": "^0.8.26"
   },
