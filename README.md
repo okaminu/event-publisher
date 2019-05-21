@@ -35,7 +35,6 @@ eventPublisher.notify('lunchtime'); # publish event, since no subscribers are pr
 eventPublisher.subscribe('lunchtime', () => { me.eat() }); # once subscribed, you receive the pending event
 ```
 
-
 Multiple subscriptions and unsubscriptions:
 ```
 eventPublisher.subscribeMultipleNames(
