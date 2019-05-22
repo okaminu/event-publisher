@@ -3,127 +3,105 @@ import { EventPublisher } from './event-publisher'
 describe('eventPublisher service:', () => {
 
     let eventPublisher: EventPublisher
-    let wasInvoked: Boolean
-    let invokedString: String
-    let invokeCount: number
+    let spyNewsSubscriber: (argument?: any) => void
 
     beforeEach(() => {
         eventPublisher = new EventPublisher()
-        wasInvoked = false
-        invokeCount = 0
+        spyNewsSubscriber = jasmine.createSpy()
     })
 
     it('Upon notification execute registered callback', () => {
-        eventPublisher.subscribe('petDog', invoke)
-        expect(wasInvoked).toBeFalsy()
+        eventPublisher.subscribe('petDog', spyNewsSubscriber)
+        expect(spyNewsSubscriber).not.toHaveBeenCalled()
 
         eventPublisher.notify('petDog')
-        expect(wasInvoked).toBeTruthy()
+        expect(spyNewsSubscriber).toHaveBeenCalled()
     })
 
     it('Upon registration the callback should be executed if notification came earlier', () => {
         eventPublisher.notify('petDog')
-        expect(wasInvoked).toBeFalsy()
+        expect(spyNewsSubscriber).not.toHaveBeenCalled()
 
-        eventPublisher.subscribe('petDog', invoke)
+        eventPublisher.subscribe('petDog', spyNewsSubscriber)
         eventPublisher.notify('petDog')
 
-        expect(wasInvoked).toBeTruthy()
+        expect(spyNewsSubscriber).toHaveBeenCalled()
     })
 
     it('After execution on subscription, following notifications should also execute', () => {
         eventPublisher.notify('petDog')
-        expect(invokeCount).toBe(0)
+        expect(spyNewsSubscriber).not.toHaveBeenCalled()
 
-        eventPublisher.subscribe('petDog', countInvoke)
+        eventPublisher.subscribe('petDog', spyNewsSubscriber)
         eventPublisher.notify('petDog')
-        expect(invokeCount).toBe(2)
+        expect(spyNewsSubscriber).toHaveBeenCalledTimes(2)
     })
 
     describe('multiple subscriptions and unsubscriptions', () => {
-        let wasSecondInvoked: Boolean
+        let spySmsSubscriber: (argument?: any) => void
 
         beforeEach(() => {
-            wasSecondInvoked = false
+            spySmsSubscriber = jasmine.createSpy()
         })
 
         it('Upon multiple registrations the callback should be executed if notification came earlier', () => {
             eventPublisher.notify('petDog')
-            expect(wasSecondInvoked).toBeFalsy()
+            expect(spySmsSubscriber).not.toHaveBeenCalled()
 
-            eventPublisher.subscribe('petDog', invoke)
-            eventPublisher.subscribe('petDog', invokeSecond)
-            expect(wasSecondInvoked).toBeTruthy()
+            eventPublisher.subscribe('petDog', spyNewsSubscriber)
+            eventPublisher.subscribe('petDog', spySmsSubscriber)
+            expect(spySmsSubscriber).toHaveBeenCalled()
         })
 
         it('Unsubscription for multiple events', () => {
-            eventPublisher.subscribe('petDog', invoke)
-            eventPublisher.subscribe('giveCatSomeFish', invokeSecond)
+            eventPublisher.subscribe('petDog', spyNewsSubscriber)
+            eventPublisher.subscribe('giveCatSomeFish', spySmsSubscriber)
             eventPublisher.notify('petDog')
             eventPublisher.notify('giveCatSomeFish')
-            expect(wasInvoked).toBeTruthy()
-            expect(wasSecondInvoked).toBeTruthy()
+            expect(spyNewsSubscriber).toHaveBeenCalledTimes(1)
+            expect(spySmsSubscriber).toHaveBeenCalledTimes(1)
 
-            wasInvoked = false
-            wasSecondInvoked = false
+
             eventPublisher.unsubscribeMultipleNames(['petDog', 'giveCatSomeFish'])
             eventPublisher.notify('petDog')
             eventPublisher.notify('giveCatSomeFish')
-            expect(wasInvoked).toBeFalsy()
-            expect(wasSecondInvoked).toBeFalsy()
+            expect(spyNewsSubscriber).toHaveBeenCalledTimes(1)
+            expect(spySmsSubscriber).toHaveBeenCalledTimes(1)
         })
-
-        function invokeSecond() {
-            wasSecondInvoked = true
-        }
     })
 
     it('Upon notification execute registered callbacks for different events', () => {
-        eventPublisher.subscribeMultipleNames(['petDog', 'giveCatSomeFish'], countInvoke)
-        expect(wasInvoked).toBeFalsy()
+        eventPublisher.subscribeMultipleNames(['petDog', 'giveCatSomeFish'], spyNewsSubscriber)
+        expect(spyNewsSubscriber).not.toHaveBeenCalled()
 
         eventPublisher.notify('petDog')
         eventPublisher.notify('giveCatSomeFish')
-        expect(invokeCount).toBe(2)
+        expect(spyNewsSubscriber).toHaveBeenCalledTimes(2)
     })
 
     it('Unsubscription should work', () => {
-        eventPublisher.subscribe('petDog', invoke)
+        eventPublisher.subscribe('petDog', spyNewsSubscriber)
         eventPublisher.notify('petDog')
-        expect(wasInvoked).toBeTruthy()
+        expect(spyNewsSubscriber).toHaveBeenCalledTimes(1)
 
-        wasInvoked = false
         eventPublisher.unsubscribe('petDog')
         eventPublisher.notify('petDog')
-        expect(wasInvoked).toBeFalsy()
+        expect(spyNewsSubscriber).toHaveBeenCalledTimes(1)
     })
 
     it('Unsubscribe does nothing when unsubscribing non-existent subscriber', () => {
-        eventPublisher.subscribe('petDog', invoke)
+        eventPublisher.subscribe('petDog', spyNewsSubscriber)
 
         eventPublisher.unsubscribe('undefinedSubscriber')
         eventPublisher.notify('petDog')
 
-        expect(wasInvoked).toBeTruthy()
+        expect(spyNewsSubscriber).toHaveBeenCalled()
     })
 
     it('Upon notification execute callback with parameter', () => {
-        eventPublisher.subscribe('petDog', invokeWithString)
-        invokedString = ''
-
-        eventPublisher.notify('petDog', 'argument')
-        expect(invokedString).toBe('argument')
+        const eventArgument = 'argument'
+        eventPublisher.subscribe('petDog', spyNewsSubscriber)
+        eventPublisher.notify('petDog', eventArgument)
+        expect(spyNewsSubscriber).toHaveBeenCalledWith(eventArgument)
     })
-
-    function invoke() {
-        wasInvoked = true
-    }
-
-    function invokeWithString(argument: String) {
-        invokedString = argument
-    }
-
-    function countInvoke() {
-        invokeCount++
-    }
 })
