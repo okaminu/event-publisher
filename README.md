@@ -44,7 +44,7 @@ eventPublisher.subscribeMultipleNames(
     () => { me.eat() }
 ); # subscribe to multiple events
 
-eventPublisher.unsubscribeMultipleNames('lunchtime', 'supper', 'breakfast'); # unsubscribe to multiple events
+eventPublisher.unsubscribeAll('lunchtime', 'supper', 'breakfast'); # unsubscribe to multiple events
 ```
 
 ## License
