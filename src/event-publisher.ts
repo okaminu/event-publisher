@@ -1,32 +1,34 @@
+import { PendingEvent } from './pending-event'
+
 export class EventPublisher {
 
-    private subscribers = []
+    private events: Array<PendingEvent> = new Array<PendingEvent>()
 
-    subscribe(eventName: string, subscriber: any) {
+    subscribe(eventName: string, subscriber: (argument?: any) => void) {
         if (!this.doesEventExist(eventName))
-            this.subscribers[eventName] = {callbacks: [], isNotifyPending: false}
+            this.events[eventName] = new PendingEvent(false)
 
-        this.subscribers[eventName].callbacks.push(subscriber)
-        if (this.subscribers[eventName].isNotifyPending)
+        this.events[eventName].subscribers.push(subscriber)
+        if (this.events[eventName].isPending)
             subscriber()
     }
 
-    subscribeMultipleNames(eventNames: string[], subscriber: any) {
+    subscribeMultipleNames(eventNames: string[], subscriber: (argument?: any) => void) {
         for (const eventName of eventNames)
             this.subscribe(eventName, subscriber)
     }
 
     notify(eventName: string, eventArgument?: any) {
         if (!this.doesEventExist(eventName))
-            this.subscribers[eventName] = {callbacks: [], isNotifyPending: true}
+            this.events[eventName] = new PendingEvent(true)
         else
-            this.notifyObservers(eventName, eventArgument)
-        this.subscribers[eventName].isNotifyPending = true
+            this.notifySubscribers(eventName, eventArgument)
+        this.events[eventName].isPending = true
     }
 
     unsubscribe(eventName: string) {
         if (this.doesEventExist(eventName))
-            delete this.subscribers[eventName]
+            delete this.events[eventName]
     }
 
     unsubscribeMultipleNames(eventNames: string[]) {
@@ -35,11 +37,11 @@ export class EventPublisher {
     }
 
     private doesEventExist(eventName: string): boolean {
-        return this.subscribers[eventName] !== undefined
+        return this.events[eventName] !== undefined
     }
 
-    private notifyObservers(eventName: string, eventArgument?: any) {
-        for (const callback of this.subscribers[eventName].callbacks)
-            callback(eventArgument)
+    private notifySubscribers(eventName: string, eventArgument?: any) {
+        for (const subscriber of this.events[eventName].subscribers)
+            subscriber(eventArgument)
     }
 }

@@ -26,7 +26,18 @@ describe('eventPublisher service:', () => {
         expect(wasInvoked).toBeFalsy()
 
         eventPublisher.subscribe('petDog', invoke)
+        eventPublisher.notify('petDog')
+
         expect(wasInvoked).toBeTruthy()
+    })
+
+    it('After execution on subscription, following notifications should also execute', () => {
+        eventPublisher.notify('petDog')
+        expect(invokeCount).toBe(0)
+
+        eventPublisher.subscribe('petDog', countInvoke)
+        eventPublisher.notify('petDog')
+        expect(invokeCount).toBe(2)
     })
 
     describe('multiple subscriptions and unsubscriptions', () => {
