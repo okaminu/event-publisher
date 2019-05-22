@@ -4,6 +4,14 @@ export class EventPublisher {
 
     private events: Array<PendingEvent> = new Array<PendingEvent>()
 
+    notify(eventName: string, eventArgument?: any) {
+        if (!this.doesEventExist(eventName))
+            this.events[eventName] = new PendingEvent(true)
+        else
+            this.notifySubscribers(eventName, eventArgument)
+        this.events[eventName].isPending = true
+    }
+
     subscribe(eventName: string, subscriber: (argument?: any) => void) {
         if (!this.doesEventExist(eventName))
             this.events[eventName] = new PendingEvent(false)
@@ -18,22 +26,14 @@ export class EventPublisher {
             this.subscribe(eventName, subscriber)
     }
 
-    notify(eventName: string, eventArgument?: any) {
-        if (!this.doesEventExist(eventName))
-            this.events[eventName] = new PendingEvent(true)
-        else
-            this.notifySubscribers(eventName, eventArgument)
-        this.events[eventName].isPending = true
+    unsubscribe(eventName: string, subscriber: (argument?: any) => void) {
+        this.events[eventName].subscribers = this.events[eventName].subscribers.filter((s) => s !== subscriber)
     }
 
-    unsubscribe(eventName: string) {
-        if (this.doesEventExist(eventName))
-            delete this.events[eventName]
-    }
-
-    unsubscribeMultipleNames(eventNames: string[]) {
+    unsubscribeAll(...eventNames: string[]) {
         for (const eventName of eventNames)
-            this.unsubscribe(eventName)
+            if (this.doesEventExist(eventName))
+                delete this.events[eventName]
     }
 
     private doesEventExist(eventName: string): boolean {
