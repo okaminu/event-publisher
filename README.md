@@ -14,8 +14,8 @@ Subscribe and notify:
 const fun = () =>  me.eat()
 eventPublisher.subscribe('lunchtime', fun); # subscribe to event
 eventPublisher.notify('lunchtime'); # publish event
-eventPublisher.unsubscribe('lunchtime', fun); #remove single subscription
-eventPublisher.unsubscribeAll('lunchtime'); #or remove all subscriptions
+eventPublisher.unsubscribe('lunchtime', fun); # remove single subscription
+eventPublisher.unsubscribeAll('lunchtime'); # or remove all subscriptions
 ```
 
 Subscribe and notify with event argument:
