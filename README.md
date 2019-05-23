@@ -31,7 +31,7 @@ eventPublisher.notify('lunchtime', 'sunday'); # publish event with event argumen
 Pending notification until first subscription:
 ```
 eventPublisher.notify('lunchtime'); # publish event, since no subscribers are present, its in pending state
-eventPublisher.subscribeAndExecuteIfPending('lunchtime', () => { me.eat() }); # once subscribed, you receive the pending event
+eventPublisher.subscribeAndExecuteIfPending('lunchtime', () => { me.eat() }); # once subscribed, the event is executed
 ```
 
 Multiple unsubscription:
