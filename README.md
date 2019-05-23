@@ -26,7 +26,6 @@ eventPublisher.subscribe(
 ); # subscribe to event and receive argument
     
 eventPublisher.notify('lunchtime', 'sunday'); # publish event with event argument
-eventPublisher.unsubscribeAll('lunchtime'); #remove all subscriptions
 ```
 
 Pending notification until first subscription:
@@ -43,8 +42,6 @@ eventPublisher.subscribeMultipleNames(
     'breakfast',
     () => { me.eat() }
 ); # subscribe to multiple events
-
-eventPublisher.unsubscribeAll('lunchtime', 'supper', 'breakfast'); # unsubscribe to multiple events
 ```
 
 ## License
