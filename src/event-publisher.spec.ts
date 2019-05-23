@@ -10,29 +10,30 @@ describe('EventPublisher service', () => {
         spyNewsSubscriber = jasmine.createSpy()
     })
 
-    it('upon notification execute registered subscriber', () => {
-        eventPublisher.subscribe('petDog', spyNewsSubscriber)
-        expect(spyNewsSubscriber).not.toHaveBeenCalled()
+    describe('Subscribtion without executing ', () => {
+        it('upon notification execute registered subscriber', () => {
+            eventPublisher.subscribe('petDog', spyNewsSubscriber)
+            expect(spyNewsSubscriber).not.toHaveBeenCalled()
 
-        eventPublisher.notify('petDog')
-        expect(spyNewsSubscriber).toHaveBeenCalled()
-    })
+            eventPublisher.notify('petDog')
+            expect(spyNewsSubscriber).toHaveBeenCalled()
+        })
 
-    it('upon registration the subscriber should be executed if notification came earlier', () => {
-        eventPublisher.notify('petDog')
-        expect(spyNewsSubscriber).not.toHaveBeenCalled()
+        it('after execution on subscription, following notifications should not be executed', () => {
+            eventPublisher.notify('petDog')
+            expect(spyNewsSubscriber).not.toHaveBeenCalled()
 
-        eventPublisher.subscribe('petDog', spyNewsSubscriber)
-        eventPublisher.notify('petDog')
-
-        expect(spyNewsSubscriber).toHaveBeenCalled()
+            eventPublisher.subscribe('petDog', spyNewsSubscriber)
+            eventPublisher.notify('petDog')
+            expect(spyNewsSubscriber).toHaveBeenCalledTimes(1)
+        })
     })
 
     it('after execution on subscription, following notifications should also execute', () => {
         eventPublisher.notify('petDog')
         expect(spyNewsSubscriber).not.toHaveBeenCalled()
 
-        eventPublisher.subscribe('petDog', spyNewsSubscriber)
+        eventPublisher.subscribeAndExecuteIfPending('petDog', spyNewsSubscriber)
         eventPublisher.notify('petDog')
         expect(spyNewsSubscriber).toHaveBeenCalledTimes(2)
     })
@@ -45,8 +46,8 @@ describe('EventPublisher service', () => {
         })
 
         it('upon multiple registrations the multiple subscribers are notified', () => {
-            eventPublisher.subscribe('petDog', spyNewsSubscriber)
-            eventPublisher.subscribe('petDog', spySmsSubscriber)
+            eventPublisher.subscribeAndExecuteIfPending('petDog', spyNewsSubscriber)
+            eventPublisher.subscribeAndExecuteIfPending('petDog', spySmsSubscriber)
 
             eventPublisher.notify('petDog')
 
@@ -58,10 +59,20 @@ describe('EventPublisher service', () => {
             eventPublisher.notify('petDog')
             expect(spySmsSubscriber).not.toHaveBeenCalled()
 
-            eventPublisher.subscribe('petDog', spyNewsSubscriber)
-            eventPublisher.subscribe('petDog', spySmsSubscriber)
+            eventPublisher.subscribeAndExecuteIfPending('petDog', spyNewsSubscriber)
+            eventPublisher.subscribeAndExecuteIfPending('petDog', spySmsSubscriber)
             expect(spyNewsSubscriber).toHaveBeenCalled()
             expect(spySmsSubscriber).toHaveBeenCalled()
+        })
+
+        it('upon multiple registrations the subscriber should not be executed if notification came earlier', () => {
+            eventPublisher.notify('petDog')
+            expect(spySmsSubscriber).not.toHaveBeenCalled()
+
+            eventPublisher.subscribe('petDog', spyNewsSubscriber)
+            eventPublisher.subscribe('petDog', spySmsSubscriber)
+            expect(spyNewsSubscriber).not.toHaveBeenCalled()
+            expect(spySmsSubscriber).not.toHaveBeenCalled()
         })
 
         it('unsubscription for multiple events', () => {
@@ -90,15 +101,6 @@ describe('EventPublisher service', () => {
             expect(spyNewsSubscriber).toHaveBeenCalled()
             expect(spySmsSubscriber).not.toHaveBeenCalled()
         })
-    })
-
-    it('upon notification execute registered subscriber for different events', () => {
-        eventPublisher.subscribeMultipleNames(['petDog', 'giveCatSomeFish'], spyNewsSubscriber)
-        expect(spyNewsSubscriber).not.toHaveBeenCalled()
-
-        eventPublisher.notify('petDog')
-        eventPublisher.notify('giveCatSomeFish')
-        expect(spyNewsSubscriber).toHaveBeenCalledTimes(2)
     })
 
     it('unsubscription should work', () => {

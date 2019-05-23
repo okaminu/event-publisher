@@ -17,13 +17,12 @@ export class EventPublisher {
             this.events[eventName] = new PendingEvent(false)
 
         this.events[eventName].subscribers.push(subscriber)
-        if (this.events[eventName].isPending)
-            subscriber()
     }
 
-    subscribeMultipleNames(eventNames: string[], subscriber: (argument?: any) => void) {
-        for (const eventName of eventNames)
-            this.subscribe(eventName, subscriber)
+    subscribeAndExecuteIfPending(eventName: string, subscriber: (argument?: any) => void) {
+        this.subscribe(eventName, subscriber)
+        if (this.events[eventName].isPending)
+            subscriber()
     }
 
     unsubscribe(eventName: string, subscriber: (argument?: any) => void) {
@@ -44,4 +43,5 @@ export class EventPublisher {
         for (const subscriber of this.events[eventName].subscribers)
             subscriber(eventArgument)
     }
+
 }

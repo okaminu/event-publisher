@@ -31,17 +31,16 @@ eventPublisher.notify('lunchtime', 'sunday'); # publish event with event argumen
 Pending notification until first subscription:
 ```
 eventPublisher.notify('lunchtime'); # publish event, since no subscribers are present, its in pending state
-eventPublisher.subscribe('lunchtime', () => { me.eat() }); # once subscribed, you receive the pending event
+eventPublisher.subscribeAndExecuteIfPending('lunchtime', () => { me.eat() }); # once subscribed, you receive the pending event
 ```
 
-Multiple subscriptions and unsubscriptions:
+Multiple unsubscription:
 ```
-eventPublisher.subscribeMultipleNames(
+eventPublisher.unsubscribeAll(
     'lunchtime',
     'supper',
-    'breakfast',
-    () => { me.eat() }
-); # subscribe to multiple events
+    'breakfast'
+); # unsubscribes multiple events
 ```
 
 ## License
