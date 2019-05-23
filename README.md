@@ -4,29 +4,29 @@ Has a straightforward implementation of Observer pattern, though has some unique
 features like keeping event in pending state until at least one subscriber is present.
 
 ## Setup
-
 ```
 $ npm install @boldadmin/event-publisher
 ```
 
 ## Usage
-
 Subscribe and notify:
 ```
-eventPublisher.subscribe('lunchtime', () => { me.eat() }); # subscribe to event
+const fun = () =>  me.eat()
+eventPublisher.subscribe('lunchtime', fun); # subscribe to event
 eventPublisher.notify('lunchtime'); # publish event
-eventPublisher.unsubscribe('lunchtime'); #remove all subscriptions
+eventPublisher.unsubscribe('lunchtime', fun); #remove single subscription
+eventPublisher.unsubscribeAll('lunchtime'); #or remove all subscriptions
 ```
 
 Subscribe and notify with event argument:
 ```
 eventPublisher.subscribe(
     'lunchtime',
-    (dayOfTheWeek) => { if (dayOfTheWeek === 'sunday') me.eatAtHome() }
+    (dayOfTheWeek) =>  if (dayOfTheWeek === 'sunday') me.eatAtHome() 
 ); # subscribe to event and receive argument
     
 eventPublisher.notify('lunchtime', 'sunday'); # publish event with event argument
-eventPublisher.unsubscribe('lunchtime'); #remove all subscriptions
+eventPublisher.unsubscribeAll('lunchtime'); #remove all subscriptions
 ```
 
 Pending notification until first subscription:
