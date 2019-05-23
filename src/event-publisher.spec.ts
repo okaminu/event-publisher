@@ -19,7 +19,7 @@ describe('EventPublisher service', () => {
             expect(spyNewsSubscriber).toHaveBeenCalled()
         })
 
-        it('after execution on subscription, following notifications should not be executed', () => {
+        it('after execution on subscription, pending notifications should not be executed', () => {
             eventPublisher.notify('petDog')
             expect(spyNewsSubscriber).not.toHaveBeenCalled()
 
