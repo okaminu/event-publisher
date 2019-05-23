@@ -46,8 +46,8 @@ describe('EventPublisher service', () => {
         })
 
         it('upon multiple registrations the multiple subscribers are notified', () => {
-            eventPublisher.subscribeAndExecuteIfPending('petDog', spyNewsSubscriber)
-            eventPublisher.subscribeAndExecuteIfPending('petDog', spySmsSubscriber)
+            eventPublisher.subscribe('petDog', spyNewsSubscriber)
+            eventPublisher.subscribe('petDog', spySmsSubscriber)
 
             eventPublisher.notify('petDog')
 
@@ -55,7 +55,7 @@ describe('EventPublisher service', () => {
             expect(spySmsSubscriber).toHaveBeenCalled()
         })
 
-        it('upon multiple registrations the subscriber should be executed if notification came earlier', () => {
+        fit('upon multiple registrations the subscriber should be executed if notification came earlier', () => {
             eventPublisher.notify('petDog')
             expect(spySmsSubscriber).not.toHaveBeenCalled()
 
