@@ -10,7 +10,7 @@ describe('EventPublisher service', () => {
         spyNewsSubscriber = jasmine.createSpy()
     })
 
-    describe('Subscribtion without executing ', () => {
+    describe('Subscription without executing', () => {
         it('upon notification execute registered subscriber', () => {
             eventPublisher.subscribe('petDog', spyNewsSubscriber)
             expect(spyNewsSubscriber).not.toHaveBeenCalled()
