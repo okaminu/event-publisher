@@ -46,8 +46,8 @@ describe('EventPublisher service', () => {
         })
 
         it('upon multiple registrations the multiple subscribers are notified', () => {
-            eventPublisher.subscribe('petDog', spyNewsSubscriber)
-            eventPublisher.subscribe('petDog', spySmsSubscriber)
+            eventPublisher.subscribeAndExecuteIfPending('petDog', spyNewsSubscriber)
+            eventPublisher.subscribeAndExecuteIfPending('petDog', spySmsSubscriber)
 
             eventPublisher.notify('petDog')
 
