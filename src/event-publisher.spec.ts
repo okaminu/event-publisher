@@ -55,7 +55,7 @@ describe('EventPublisher service', () => {
             expect(spySmsSubscriber).toHaveBeenCalled()
         })
 
-        fit('upon multiple registrations the subscriber should be executed if notification came earlier', () => {
+        it('upon multiple registrations the subscriber should be executed if notification came earlier', () => {
             eventPublisher.notify('petDog')
             expect(spySmsSubscriber).not.toHaveBeenCalled()
 
