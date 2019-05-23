@@ -39,8 +39,11 @@ module.exports = function (config) {
                         branches: 100,
                         functions: 100,
                         lines: 100,
-                    },
-                },
+                        excludes: [
+                            "src/**/pending-event.ts"
+                        ]
+                    }
+                }
             }
         },
 
