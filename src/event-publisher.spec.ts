@@ -1,6 +1,6 @@
 import { EventPublisher } from './event-publisher'
 
-describe('eventPublisher service:', () => {
+describe('EventPublisher service', () => {
 
     let eventPublisher: EventPublisher
     let spyNewsSubscriber: (argument?: any) => void
@@ -10,7 +10,7 @@ describe('eventPublisher service:', () => {
         spyNewsSubscriber = jasmine.createSpy()
     })
 
-    it('Upon notification execute registered subscriber', () => {
+    it('upon notification execute registered subscriber', () => {
         eventPublisher.subscribe('petDog', spyNewsSubscriber)
         expect(spyNewsSubscriber).not.toHaveBeenCalled()
 
@@ -18,7 +18,7 @@ describe('eventPublisher service:', () => {
         expect(spyNewsSubscriber).toHaveBeenCalled()
     })
 
-    it('Upon registration the subscriber should be executed if notification came earlier', () => {
+    it('upon registration the subscriber should be executed if notification came earlier', () => {
         eventPublisher.notify('petDog')
         expect(spyNewsSubscriber).not.toHaveBeenCalled()
 
@@ -28,7 +28,7 @@ describe('eventPublisher service:', () => {
         expect(spyNewsSubscriber).toHaveBeenCalled()
     })
 
-    it('After execution on subscription, following notifications should also execute', () => {
+    it('after execution on subscription, following notifications should also execute', () => {
         eventPublisher.notify('petDog')
         expect(spyNewsSubscriber).not.toHaveBeenCalled()
 
@@ -37,14 +37,14 @@ describe('eventPublisher service:', () => {
         expect(spyNewsSubscriber).toHaveBeenCalledTimes(2)
     })
 
-    describe('multiple subscriptions and unsubscriptions', () => {
+    describe('Multiple subscriptions and unsubscriptions', () => {
         let spySmsSubscriber: (argument?: any) => void
 
         beforeEach(() => {
             spySmsSubscriber = jasmine.createSpy()
         })
 
-        it('Upon multiple registrations the multiple subscribers are notified', () => {
+        it('upon multiple registrations the multiple subscribers are notified', () => {
             eventPublisher.subscribe('petDog', spyNewsSubscriber)
             eventPublisher.subscribe('petDog', spySmsSubscriber)
 
@@ -54,7 +54,7 @@ describe('eventPublisher service:', () => {
             expect(spySmsSubscriber).toHaveBeenCalled()
         })
 
-        it('Upon multiple registrations the subscriber should be executed if notification came earlier', () => {
+        it('upon multiple registrations the subscriber should be executed if notification came earlier', () => {
             eventPublisher.notify('petDog')
             expect(spySmsSubscriber).not.toHaveBeenCalled()
 
@@ -64,7 +64,7 @@ describe('eventPublisher service:', () => {
             expect(spySmsSubscriber).toHaveBeenCalled()
         })
 
-        it('Unsubscription for multiple events', () => {
+        it('unsubscription for multiple events', () => {
             eventPublisher.subscribe('petDog', spyNewsSubscriber)
             eventPublisher.subscribe('giveCatSomeFish', spySmsSubscriber)
             eventPublisher.notify('petDog')
@@ -80,7 +80,7 @@ describe('eventPublisher service:', () => {
             expect(spySmsSubscriber).toHaveBeenCalledTimes(1)
         })
 
-        it('Unsubscribes single subscriber for same event', () => {
+        it('unsubscribes single subscriber for same event', () => {
             eventPublisher.subscribe('petDog', spyNewsSubscriber)
             eventPublisher.subscribe('petDog', spySmsSubscriber)
             eventPublisher.unsubscribe('petDog', spySmsSubscriber)
@@ -92,7 +92,7 @@ describe('eventPublisher service:', () => {
         })
     })
 
-    it('Upon notification execute registered subscribers for different events', () => {
+    it('upon notification execute registered subscriber for different events', () => {
         eventPublisher.subscribeMultipleNames(['petDog', 'giveCatSomeFish'], spyNewsSubscriber)
         expect(spyNewsSubscriber).not.toHaveBeenCalled()
 
@@ -101,7 +101,7 @@ describe('eventPublisher service:', () => {
         expect(spyNewsSubscriber).toHaveBeenCalledTimes(2)
     })
 
-    it('Unsubscription should work', () => {
+    it('unsubscription should work', () => {
         eventPublisher.subscribe('petDog', spyNewsSubscriber)
         eventPublisher.notify('petDog')
         expect(spyNewsSubscriber).toHaveBeenCalledTimes(1)
@@ -111,7 +111,7 @@ describe('eventPublisher service:', () => {
         expect(spyNewsSubscriber).toHaveBeenCalledTimes(1)
     })
 
-    it('Unsubscribe does nothing when unsubscribing non-existent subscriber', () => {
+    it('unsubscribe does nothing when unsubscribing non-existent subscriber', () => {
         eventPublisher.subscribe('petDog', spyNewsSubscriber)
 
         eventPublisher.unsubscribeAll('undefinedSubscriber')
@@ -120,7 +120,7 @@ describe('eventPublisher service:', () => {
         expect(spyNewsSubscriber).toHaveBeenCalled()
     })
 
-    it('Upon notification execute subscriber with parameter', () => {
+    it('upon notification execute subscriber with parameter', () => {
         const eventArgument = 'argument'
         eventPublisher.subscribe('petDog', spyNewsSubscriber)
         eventPublisher.notify('petDog', eventArgument)
