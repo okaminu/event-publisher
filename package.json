@@ -49,6 +49,7 @@
     "test": "karma start karma.conf.js --single-run",
     "test-watch": "karma start karma.conf.js",
     "lint": "tslint -p tsconfig.json",
-    "link": "npm link"
+    "link": "npm link",
+    "first-time-link": "cd lib && npm link && rm -rf node_modules"
   }
 }
