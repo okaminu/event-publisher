@@ -1,6 +1,6 @@
 {
   "name": "@boldadmin/event-publisher",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Observer pattern for JavaScript and TypeScript",
   "keywords": [
     "observer",
@@ -49,6 +49,7 @@
     "test": "karma start karma.conf.js --single-run",
     "test-watch": "karma start karma.conf.js",
     "lint": "tslint -p tsconfig.json",
-    "link": "npm link"
+    "link": "npm link",
+    "link-first-time": "cd lib && npm link && rm -rf node_modules"
   }
 }
