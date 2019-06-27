@@ -1,6 +1,6 @@
 {
   "name": "@boldadmin/event-publisher",
-  "version": "2.2.4",
+  "version": "2.3.0",
   "description": "Observer pattern for JavaScript and TypeScript",
   "keywords": [
     "observer",
