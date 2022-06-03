@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@angular/compiler": "^8.2.0",
-    "@angular/core": "^8.2.0",
+    "@angular/core": "^11.0.5",
     "@types/jasmine": "^3.4.0",
     "@types/node": "^12.7.1",
     "codelyzer": "^5.1.0",
